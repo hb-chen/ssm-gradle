@@ -1,0 +1,48 @@
+archivesBaseName = 'security'
+
+/**
+ * 插件库
+ */
+buildscript {
+    repositories {
+        //mavenCentral()
+        maven {
+            //url "http://maven.aliyun.com/nexus/content/groups/public"
+            url("https://plugins.gradle.org/m2/")
+        }
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+configurations {
+    providedCompile
+}
+
+/**
+ * 依赖
+ */
+dependencies {
+    compile project(":common")
+    compile project(":dao")
+    compile project(":service")
+
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-aop:${springBootVersion}")
+//    compile("org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}")
+
+    compile("org.springframework:spring-context:${springVersion}")
+    compile("org.springframework:spring-beans:${springVersion}")
+    compile("org.springframework:spring-tx:${springVersion}")
+
+    // Shrio
+    compile("org.apache.shiro:shiro-spring:${shiroVersion}")
+    compile("org.apache.shiro:shiro-web:${shiroVersion}")
+
+    // javax
+    compile("javax.servlet:jstl:${javaxJstlApiVersion}")
+    compile("javax.servlet:javax.servlet-api:${javaxServletApiVersion}")
+    compile("javax.servlet.jsp:javax.servlet.jsp-api:${javaxJspApiVersion}")
+}

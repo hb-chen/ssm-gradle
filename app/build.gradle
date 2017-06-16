@@ -1,0 +1,64 @@
+archivesBaseName = 'app'
+
+apply plugin: 'org.springframework.boot'
+
+/**
+ * 使用application运行
+ * ./gradlew run
+ */
+// apply plugin: 'application'
+// mainClassName = 'com.hobo.app.Application'
+
+/**
+ * 插件库
+ */
+buildscript {
+    repositories {
+        //mavenCentral()
+        maven {
+            //url "http://maven.aliyun.com/nexus/content/groups/public"
+            url("https://plugins.gradle.org/m2/")
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+// tag::war[]
+//apply plugin: 'war'
+//war {
+//    baseName = 'spring-gradle'
+//    version =  '0.1.0'
+//}
+// end::war[]
+
+// tag::jar[]
+jar {
+    baseName = 'spring-gradle'
+    version =  '0.1.0'
+}
+// end::jar[]
+
+configurations {
+    providedRuntime
+}
+
+/**
+ * 依赖
+ */
+dependencies {
+    compile project(":dao")
+    compile project(":service")
+    compile project(":security")
+
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.boot:spring-boot-devtools")
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+    //testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    compile("joda-time:joda-time:2.2")
+    testCompile("junit:junit")
+    // compile "joda-time:joda-time:2.2"
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hobo.dao.mapper.PostMapper">
+  <resultMap id="BaseResultMap" type="com.hobo.dao.entity.Post">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="context" jdbcType="VARCHAR" property="context" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+</mapper>
