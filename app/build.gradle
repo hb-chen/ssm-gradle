@@ -41,6 +41,7 @@ jar {
 // end::jar[]
 
 configurations {
+    all*.exclude module: 'slf4j-log4j12'
     providedRuntime
 }
 
@@ -56,7 +57,17 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-devtools")
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
-    //testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    // Mahout
+    compile("org.apache.mahout:mahout:0.13.0")
+    compile("org.apache.mahout:mahout-math:0.13.0")
+    compile("org.apache.mahout:mahout-hdfs:0.13.0")
+    compile("org.apache.mahout:mahout-spark_2.10:0.13.0")
+    compile("org.apache.mahout:mahout-integration:0.13.0") {
+        exclude group: 'org.mortbay.jetty', module: 'jetty'
+        exclude group: 'org.apache.cassandra', module: 'cassandra-all'
+        exclude group: 'me.prettyprint', module: 'hector-core'
+    }
 
     compile("joda-time:joda-time:2.2")
     testCompile("junit:junit")
