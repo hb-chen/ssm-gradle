@@ -1,6 +1,7 @@
 archivesBaseName = 'app'
 
 apply plugin: 'org.springframework.boot'
+apply plugin: 'com.google.protobuf'
 
 /**
  * 使用application运行
@@ -22,6 +23,15 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("com.google.protobuf:protobuf-gradle-plugin:$versions.protobufGradle")
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs += 'build/generated/source/proto/main/java'
+        }
     }
 }
 
@@ -58,18 +68,26 @@ dependencies {
     compile("org.springframework.boot:spring-boot-devtools")
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 
+    // Micro
+    compile("com.sixt.service:ja-micro:$versions.jaMicro")
+
     // Mahout
-    compile("org.apache.mahout:mahout:0.13.0")
-    compile("org.apache.mahout:mahout-math:0.13.0")
-    compile("org.apache.mahout:mahout-hdfs:0.13.0")
-    compile("org.apache.mahout:mahout-spark_2.10:0.13.0")
-    compile("org.apache.mahout:mahout-integration:0.13.0") {
+    compile("org.apache.mahout:mahout:$versions.mahout")
+    compile("org.apache.mahout:mahout-math:$versions.mahout")
+    compile("org.apache.mahout:mahout-hdfs:$versions.mahout")
+    compile("org.apache.mahout:mahout-spark_2.10:$versions.mahout")
+    compile("org.apache.mahout:mahout-integration:$versions.mahout") {
         exclude group: 'org.mortbay.jetty', module: 'jetty'
         exclude group: 'org.apache.cassandra', module: 'cassandra-all'
         exclude group: 'me.prettyprint', module: 'hector-core'
     }
 
-    compile("joda-time:joda-time:2.2")
+    compile("joda-time:joda-time:${jodatimeVersion}")
     testCompile("junit:junit")
-    // compile "joda-time:joda-time:2.2"
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:$versions.protobuf"
+    }
 }

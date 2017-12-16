@@ -1,8 +1,13 @@
-spring boot mvc mybatis shiro
+Spring Boot Sample 
 
-#### Flyway初始化数据库
+- shiro
+- mybatis
+- mahout
+
+#### 配置数据库
 ```bash
-$ ./gradlew flywayMigrate
+# env=dev
+$ vi dao/src/main/java/resources/resources-dev/db-mysql.properties
 ```
 
 #### 运行

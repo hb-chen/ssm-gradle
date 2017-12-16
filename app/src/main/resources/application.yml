@@ -42,6 +42,9 @@ spring:
         cache: false
         request-context-attribute: request
 
+flyway:
+    baseline-on-migrate: true
+
 #以下属性不可用
 #mybatis:
 #    pagehelper:

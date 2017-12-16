@@ -1,12 +1,18 @@
 allprojects {
     // tag::repositories[]
     repositories {
+        //jcenter()
         //mavenCentral()
         maven {
             //url "http://maven.aliyun.com/nexus/content/groups/public"
             url("https://plugins.gradle.org/m2/")
         }
-        jcenter()
+        maven {
+            url "https://dl.bintray.com/sixt/ja-micro"
+        }
+        maven {
+            url 'https://dl.bintray.com/palantir/releases' // docker-compose-rule is published on bintray
+        }
     }
     // end::repositories[]
 
@@ -30,7 +36,6 @@ allprojects {
 
         mysqlVersion = '5.1.41'
 
-
         jedisVersion = '2.9.0'
         slf4jVersion = '1.7.24'
         log4j2Version = '2.8.1'
@@ -47,7 +52,6 @@ allprojects {
         ehcacheVersion = '2.10.3'
         jodatimeVersion = '2.9.7'
         javassistVersion = '3.21.0-GA'
-        flywayVersion = '4.1.1'
 
         commonsIoVersion = '2.5'
         commonsLangVersion = '3.5'
@@ -62,14 +66,33 @@ allprojects {
         javaxJspApiVersion = '2.3.0'
 
         tomcatVersion = '8.5.11'
+
+        mahoutVersion = '0.13.0'
     }
+
+    ext.versions = [
+            'protobufGradle': '0.8.3',
+            'jetty'         : '9.4.3.v20170317',
+            'protobuf'      : '3.2.0',
+            'guice'         : '4.1.0',
+            'kafka'         : '0.10.2.1',
+            'guava'         : '21.0',
+            'logback'       : '1.2.3',
+            'slf4j'         : '1.7.25',
+            'tracing'       : '0.21.0',
+            'powermock'     : '1.6.6',
+
+            'mahout' : '0.13.0',
+
+            'jaMicro' : '3.2.1',
+    ]
 }
 
 subprojects {
     apply plugin: 'java'
     apply plugin: 'eclipse'
     apply plugin: 'idea'
-    
+
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 

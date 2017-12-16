@@ -1,6 +1,6 @@
 archivesBaseName = 'dao'
 
-apply plugin: 'org.flywaydb.flyway'
+//apply plugin: 'org.flywaydb.flyway'
 
 /**
  * 插件库
@@ -14,7 +14,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.flywaydb:flyway-gradle-plugin:${flywayVersion}"
+        //classpath "org.flywaydb:flyway-gradle-plugin:${flywayVersion}"
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
@@ -49,13 +49,15 @@ sourceSets {
  * Flyway
  * ./gradlew flywayMigrate
  */
-flyway {
-    def prop = getDbProperties()
-    user = prop.getProperty('jdbc.user')
-    url = prop.getProperty('jdbc.url')
-    password = prop.getProperty('jdbc.pass')
-    locations = ["filesystem:db/migration"]
-}
+//flyway {
+//    def prop = getDbProperties()
+//
+//    user = prop.getProperty('jdbc.user')
+//    url = prop.getProperty('jdbc.url')
+//    password = prop.getProperty('jdbc.pass')
+//    locations = ["classpath:db/migration"]
+//    //baselineOnMigrate = true
+//}
 
 /**
  * MyBatis
@@ -83,7 +85,7 @@ task mybatisGenerate doLast {
             classpath: configurations.mybatisGenerator.asPath
     )
     ant.mbgenerator(overwrite: true,
-            configfile: 'db/generatorConfig.xml', verbose: true) {
+            configfile: sourceSets.main.resources.srcDirs[0].path + '/db/generatorConfig.xml', verbose: true) {
         propertyset {
             propertyref(name: 'targetProject')
             propertyref(name: 'userId')
