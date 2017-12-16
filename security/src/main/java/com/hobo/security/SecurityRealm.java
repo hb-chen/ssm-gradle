@@ -4,11 +4,8 @@ import com.hobo.common.utils.EncryptUtils;
 import com.hobo.dao.entity.User;
 import com.hobo.service.UserService;
 //import org.apache.logging.log4j.util.Strings;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -66,19 +63,16 @@ public class SecurityRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
         logger.debug("doGetAuthenticationInfo......");
         User user = userService.findByUsername(authcToken.getPrincipal().toString());
-        if (user != null) {
+        if (user == null) {
+            throw new UnknownAccountException();    // 没找到帐号
+        } else {
             byte[] salt = EncryptUtils.decodeHex("12345678");
 
-            SecurityUser securityUser = new SecurityUser();
-            securityUser.setName(user.getNickname());
-            securityUser.setUsername(user.getNickname());
-            return new SimpleAuthenticationInfo(securityUser, user.getPassword(), ByteSource.Util.bytes(salt), getName());
+            // SecurityUser securityUser = new SecurityUser();
+            // securityUser.setName(user.getNickname());
+            // securityUser.setUsername(user.getNickname());
+            return new SimpleAuthenticationInfo(user.getNickname(), user.getPassword(), ByteSource.Util.bytes(salt), getName());
         }
-        byte[] salt = EncryptUtils.decodeHex("12345678");
-        SecurityUser securityUser = new SecurityUser();
-        securityUser.setName(authcToken.getPrincipal().toString());
-        securityUser.setUsername(authcToken.getPrincipal().toString());
-        return new SimpleAuthenticationInfo(securityUser, "123456", ByteSource.Util.bytes(salt), getName());
     }
 
     @Override
