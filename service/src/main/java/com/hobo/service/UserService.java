@@ -19,7 +19,9 @@ public class UserService {
     }
 
     public User findByUsername(String username) {
-        return null;
+        User user = new User();
+        user.setNickname(username);
+        return userMapper.selectOne(user);
     }
 
     public String encryptPassword(String plainPassword, String salt) {

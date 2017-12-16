@@ -76,6 +76,8 @@ public class SecurityRealm extends AuthorizingRealm {
         }
         byte[] salt = EncryptUtils.decodeHex("12345678");
         SecurityUser securityUser = new SecurityUser();
+        securityUser.setName(authcToken.getPrincipal().toString());
+        securityUser.setUsername(authcToken.getPrincipal().toString());
         return new SimpleAuthenticationInfo(securityUser, "123456", ByteSource.Util.bytes(salt), getName());
     }
 
@@ -86,27 +88,15 @@ public class SecurityRealm extends AuthorizingRealm {
             SecurityToken securityToken = (SecurityToken) token;
 
             String loginType = securityToken.getType();
-            if (!loginType.isEmpty()){
-                if (loginType.equalsIgnoreCase(SecurityConstants.AUTH_TYPE_SSO)){
+            if (!loginType.isEmpty()) {
+                if (loginType.equalsIgnoreCase(SecurityConstants.AUTH_TYPE_SSO)) {
 
-                }else if (loginType.equalsIgnoreCase(SecurityConstants.AUTH_TYPE_API)){
+                } else if (loginType.equalsIgnoreCase(SecurityConstants.AUTH_TYPE_API)) {
                     super.assertCredentialsMatch(token, info);
-                }else if (loginType.equalsIgnoreCase(SecurityConstants.AUTH_TYPE_FORM)){
-                    String username = securityToken.getUsername();
-                    if (username.equalsIgnoreCase("Hobo")){
-                        return;
-                    }
-
+                } else if (loginType.equalsIgnoreCase(SecurityConstants.AUTH_TYPE_FORM)) {
                     super.assertCredentialsMatch(token, info);
                 }
             }
-//            if (Strings.isNotBlank(loginType) && loginType.equalsIgnoreCase(SecurityConstants.AUTH_TYPE_SSO)) {
-//
-//            } else if (Strings.isNotBlank(loginType) && loginType.equalsIgnoreCase(SecurityConstants.AUTH_TYPE_FORM)) {
-//                super.assertCredentialsMatch(token, info);
-//            } else if (Strings.isNotBlank(loginType) && loginType.equalsIgnoreCase(SecurityConstants.AUTH_TYPE_API)) {
-//                super.assertCredentialsMatch(token, info);
-//            }
         } else {
             super.assertCredentialsMatch(token, info);
         }

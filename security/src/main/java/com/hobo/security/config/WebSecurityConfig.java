@@ -1,13 +1,12 @@
 package com.hobo.security.config;
 
-import com.hobo.security.SecurityConstants;
 import com.hobo.security.SecurityDefinitionSource;
 import com.hobo.security.SecurityRealm;
 import com.hobo.security.SecurityToken;
 import com.hobo.security.filter.ApiAuthFilter;
 import com.hobo.security.filter.FormAuthFilter;
 import com.hobo.security.filter.SsoAuthFilter;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -81,8 +80,9 @@ public class WebSecurityConfig {
     @DependsOn("lifecycleBeanPostProcessor")
     public AuthorizingRealm realm() {
         logger.info("ream......");
-        HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher(SecurityConstants.HASH_ALGORITHM);
-        credentialsMatcher.setHashIterations(SecurityConstants.HASH_INTERATIONS);
+        SimpleCredentialsMatcher credentialsMatcher = new SimpleCredentialsMatcher();
+        // HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher(SecurityConstants.HASH_ALGORITHM);
+        // credentialsMatcher.setHashIterations(SecurityConstants.HASH_INTERATIONS);
 
         SecurityRealm securityRealm = new SecurityRealm();
         securityRealm.setCredentialsMatcher(credentialsMatcher);
